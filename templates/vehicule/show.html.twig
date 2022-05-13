@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vehicule
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-info text-center">Détail d'un véhicule
+	</h1>
+	<div class="container">
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+					<th>Propriétaire</th>
+					<td>{{ vehicule.proprietaire }}</td>
+				</tr>
+				<tr>
+					<th>Marque</th>
+					<td>{{ vehicule.marque }}</td>
+				</tr>
+				<tr>
+					<th>Modele</th>
+					<td>{{ vehicule.modele }}</td>
+				</tr>
+				<tr>
+					<th>Année de sortie</th>
+					<td>{{ vehicule.anneeDeSortie ? vehicule.anneeDeSortie|date() : '' }}</td>
+				</tr>
+				<tr>
+					<th>Energie</th>
+					<td>{{ vehicule.energie }}</td>
+				</tr>
+				<tr>
+					<th>Boite de vitesse</th>
+					<td>{{ vehicule.boiteDeVitesse }}</td>
+				</tr>
+				<tr>
+					<th>Nombre de portes</th>
+					<td>{{ vehicule.nombreDePortes }}</td>
+				</tr>
+				<tr>
+					<th>Photo</th>
+					{% if vehicule.image is not null %}
+						<td class="w-25 h-25 text-center"><img src='/images/vehicules/{{ vehicule.image }}' alt='vehicule-photo' class="img-thumbnail rounded mx-auto d-block m-l-2" style="width: 50%; height: auto"/></td>
+					{% else  %}
+
+						<td class="w-25 h-25 text-center"><img src='/images/vehicules/default.jpg' alt='vehicule-photo' class="img-thumbnail rounded mx-auto d-block m-l-2" style="width: 50%; height: auto"/></td>
+					{% endif %}
+				</tr>
+			</tbody>
+		</table>
+		<div class="conatiner text-center">
+			<a class="btn btn-primary" href="{{ path('vehicule_index') }}">Retour à la liste</a>
+			{% if app.user is not null %}
+				<a class="btn btn-warning" href="{{ path('vehicule_edit', {'id': vehicule.id}) }}">Modifier</a>
+
+				{{ include('vehicule/_delete_form.html.twig') }}
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

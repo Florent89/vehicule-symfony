@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vehicule index
+{% endblock %}
+
+{% block body %}
+
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+	<h1 class="text-center text-info">Liste des véhicules</h1>
+	<div class="container">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Propriétaire</th>
+					<th>Marque</th>
+					<th>Modele</th>
+					<th class="text-center">Photo</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for vehicule in vehicules %}
+					<tr>
+						<td class="align-middle">{{ vehicule.proprietaire }}</td>
+						<td class="align-middle">{{ vehicule.marque }}</td>
+						<td class="align-middle">{{ vehicule.modele }}</td>
+						{% if vehicule.image is not null %}
+							<td class="w-25 h-25 text-center"><img src='https://www.cefii-developpements.fr/florent1221/ECF1/app/public/vehicule/images/vehicules/{{ vehicule.image }}' alt='vehicule-photo' class="img-thumbnail rounded mx-auto d-block m-l-2" style="width: 50%; height: auto"/></td>
+						{% else  %}
+
+							<td class="w-25 h-25 text-center"><img src='https://www.cefii-developpements.fr/florent1221/ECF1/app/public/vehicule/images/vehicules/default.jpg' alt='vehicule-photo' class="img-thumbnail rounded mx-auto d-block m-l-2" style="width: 50%; height: auto"/></td>
+						{% endif %}
+						<td>
+							<a class="btn btn-info align-middle" href="{{ path('vehicule_show', {'id': vehicule.id}) }}">Détails</a>
+							{% if app.user is not null %}
+								<a class="btn btn-warning align-middle" href="{{ path('vehicule_edit', {'id': vehicule.id}) }}">Modifier</a>
+							{% endif %}
+
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="8">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% if app.user is not null %}
+			<div class="text-center">
+				<a class="btn btn-primary" href="{{ path('vehicule_new') }}">Ajouter un véhicule</a>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
